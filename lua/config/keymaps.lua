@@ -60,3 +60,35 @@ vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { noremap = true, silent = t
 
 -- Previous Diagnostic
 vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { noremap = true, silent = true, desc = "Previous Diagnostic" })
+
+-- Package-info.nvim keymaps
+vim.keymap.set(
+  "n",
+  "<leader>ns",
+  require("package-info").show,
+  { noremap = true, silent = true, desc = "Show package versions" }
+)
+vim.keymap.set(
+  "n",
+  "<leader>nd",
+  require("package-info").delete,
+  { noremap = true, silent = true, desc = "Delete dependency" }
+)
+vim.keymap.set(
+  "n",
+  "<leader>nu",
+  require("package-info").update,
+  { noremap = true, silent = true, desc = "Update dependency" }
+)
+vim.keymap.set(
+  "n",
+  "<leader>ni",
+  require("package-info").install,
+  { noremap = true, silent = true, desc = "Install dependency" }
+)
+vim.keymap.set(
+  "n",
+  "<leader>np",
+  require("package-info").change_version,
+  { noremap = true, silent = true, desc = "Change dependency version" }
+)
