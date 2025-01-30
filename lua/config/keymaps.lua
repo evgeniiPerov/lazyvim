@@ -2,6 +2,8 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 
+local wk = require("which-key")
+
 -- Example: Resume Telescope picker
 vim.keymap.set(
   "n",
@@ -92,3 +94,13 @@ vim.keymap.set(
   require("package-info").change_version,
   { noremap = true, silent = true, desc = "Change dependency version" }
 )
+
+-- -- Open Lazydocker in a buffer
+-- vim.keymap.set("n", "<leader>Db", function()
+--   vim.cmd("tabnew | term lazydocker")
+-- end, { noremap = true, silent = true, desc = "Open Lazydocker (Buffer)" })
+--
+-- -- Open Lazydocker in a floating window (via lazydocker.nvim)
+-- vim.keymap.set("n", "<leader>DD", function()
+--   vim.cmd("LazyDocker")
+-- end, { noremap = true, silent = true, desc = "Open Lazydocker (Floating)" })
