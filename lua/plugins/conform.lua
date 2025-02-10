@@ -1,49 +1,51 @@
-return {
-  "stevearc/conform.nvim",
-  event = { "BufReadPre", "BufNewFile" },
-  opts = {
-    formatters_by_ft = {
-      lua = { "stylua" },
-      javascript = { "biome", "prettier", "eslint_d" },
-      typescript = { "biome", "prettier", "eslint_d" },
-      javascriptreact = { "biome", "prettier", "eslint_d" },
-      typescriptreact = { "biome", "prettier", "eslint_d" },
-      vue = { "biome", "prettier", "eslint_d" },
-      json = { "biome", "prettier" },
-      jsonc = { "biome", "prettier" },
-      graphql = { "biome", "prettier" },
-      markdown = { "prettier" },
-    },
-    formatters = {
-      biome = {
-        command = "biome",
-        args = { "format", "--stdin-file-path", "$FILENAME" },
-        stdin = true,
-        condition = function(ctx)
-          return vim.fs.find({ "biome.json" }, { path = ctx.dirname, upward = true })[1] ~= nil
-        end,
-      },
-      eslint_d = {
-        condition = function(ctx)
-          return not vim.fs.find({ "biome.json" }, { path = ctx.dirname, upward = true })[1]
-            and vim.fs.find(
-                { ".eslintrc", ".eslintrc.js", ".eslintrc.json", "eslint.config.js" },
-                { path = ctx.dirname, upward = true }
-              )[1]
-              ~= nil
-        end,
-      },
-      prettier = {
-        condition = function(ctx)
-          return not vim.fs.find({ "biome.json" }, { path = ctx.dirname, upward = true })[1]
-            and vim.fs.find(
-                { ".prettierrc", ".prettierrc.json", ".prettierrc.js", ".prettierrc.yml", "prettier.config.js" },
-                { path = ctx.dirname, upward = true }
-              )[1]
-              ~= nil
-        end,
-      },
-    },
-    stop_after_first = true, -- Ensures only one formatter runs
-  },
-}
+return {}
+-- return {
+--
+--   "stevearc/conform.nvim",
+--   event = { "BufReadPre", "BufNewFile" },
+--   opts = {
+--     formatters_by_ft = {
+--       lua = { "stylua" },
+--       javascript = { "biome", "prettier", "eslint_d" },
+--       typescript = { "biome", "prettier", "eslint_d" },
+--       javascriptreact = { "biome", "prettier", "eslint_d" },
+--       typescriptreact = { "biome", "prettier", "eslint_d" },
+--       vue = { "biome", "prettier", "eslint_d" },
+--       json = { "biome", "prettier" },
+--       jsonc = { "biome", "prettier" },
+--       graphql = { "biome", "prettier" },
+--       markdown = { "prettier" },
+--     },
+--     formatters = {
+--       biome = {
+--         command = "biome",
+--         args = { "format", "--stdin-file-path", "$FILENAME" },
+--         stdin = true,
+--         condition = function(ctx)
+--           return vim.fs.find({ "biome.json" }, { path = ctx.dirname, upward = true })[1] ~= nil
+--         end,
+--       },
+--       eslint_d = {
+--         condition = function(ctx)
+--           return not vim.fs.find({ "biome.json" }, { path = ctx.dirname, upward = true })[1]
+--             and vim.fs.find(
+--                 { ".eslintrc", ".eslintrc.js", ".eslintrc.json", "eslint.config.js" },
+--                 { path = ctx.dirname, upward = true }
+--               )[1]
+--               ~= nil
+--         end,
+--       },
+--       prettier = {
+--         condition = function(ctx)
+--           return not vim.fs.find({ "biome.json" }, { path = ctx.dirname, upward = true })[1]
+--             and vim.fs.find(
+--                 { ".prettierrc", ".prettierrc.json", ".prettierrc.js", ".prettierrc.yml", "prettier.config.js" },
+--                 { path = ctx.dirname, upward = true }
+--               )[1]
+--               ~= nil
+--         end,
+--       },
+--     },
+--     stop_after_first = true, -- Ensures only one formatter runs
+--   },
+-- }

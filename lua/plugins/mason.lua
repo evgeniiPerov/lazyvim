@@ -6,7 +6,7 @@ return {
       -- "vlts", -- TypeScript server for React
       "biome",
       "prettier",
-      "eslint_d",
+      -- "eslint_d",
       "graphql-language-service-cli",
     })
   end,
