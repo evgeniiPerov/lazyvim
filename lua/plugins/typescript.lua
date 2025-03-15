@@ -1,39 +1,40 @@
-return {
-  "pmizio/typescript-tools.nvim",
-  dependencies = {
-    "nvim-lua/plenary.nvim",
-    "neovim/nvim-lspconfig",
-  },
-  opts = function()
-    local bin = vim.fn.exepath("typescript-language-server")
-    if not bin or bin == "" then
-      -- Fallback if it's not in PATH (e.g., not installed globally)
-      bin = vim.fn.stdpath("data") .. "/mason/bin/typescript-language-server"
-    end
-
-    return {
-      -- Increase memory for big projects
-      cmd = {
-        "node",
-        "--max-old-space-size=8192",
-        bin,
-        "--stdio",
-      },
-      settings = {
-        -- Automatically start a separate diagnostic server
-        separate_diagnostic_server = true,
-        publish_diagnostic_on = "insert_leave",
-        tsserver_file_preferences = {
-          includeInlayParameterNameHints = "all",
-          includeCompletionsForModuleExports = true,
-        },
-        tsserver_format_options = {
-          allowIncompleteCompletions = false,
-          allowRenameOfImportPath = false,
-        },
-        -- Add more plugin or TS preferences here if needed
-        tsserver_plugins = {},
-      },
-    }
-  end,
-}
+return {}
+-- return {
+--   "pmizio/typescript-tools.nvim",
+--   dependencies = {
+--     "nvim-lua/plenary.nvim",
+--     "neovim/nvim-lspconfig",
+--   },
+--   opts = function()
+--     local bin = vim.fn.exepath("typescript-language-server")
+--     if not bin or bin == "" then
+--       -- Fallback if it's not in PATH (e.g., not installed globally)
+--       bin = vim.fn.stdpath("data") .. "/mason/bin/typescript-language-server"
+--     end
+--
+--     return {
+--       -- Increase memory for big projects
+--       cmd = {
+--         "node",
+--         "--max-old-space-size=8192",
+--         bin,
+--         "--stdio",
+--       },
+--       settings = {
+--         -- Automatically start a separate diagnostic server
+--         separate_diagnostic_server = true,
+--         publish_diagnostic_on = "insert_leave",
+--         tsserver_file_preferences = {
+--           includeInlayParameterNameHints = "all",
+--           includeCompletionsForModuleExports = true,
+--         },
+--         tsserver_format_options = {
+--           allowIncompleteCompletions = false,
+--           allowRenameOfImportPath = false,
+--         },
+--         -- Add more plugin or TS preferences here if needed
+--         tsserver_plugins = {},
+--       },
+--     }
+--   end,
+-- }
