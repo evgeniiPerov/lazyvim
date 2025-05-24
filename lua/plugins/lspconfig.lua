@@ -1,5 +1,6 @@
 -- https://www.lazyvim.org/extras/lang/typescript#nvim-lspconfig
 -- https://www.lazyvim.org/configuration/recipes#add-eslint-and-use-it-for-formatting
+-- use biome configuration if exist in root of project
 local util = require("lazyvim.util")
 local fs = vim.loop.fs_stat
 

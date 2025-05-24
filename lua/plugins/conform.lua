@@ -16,7 +16,9 @@ return {
     else
       -- fallback (example: prettier or eslint)
       opts.formatters_by_ft.javascript = { "prettier" }
+      opts.formatters_by_ft.javascriptreact = { "prettier" }
       opts.formatters_by_ft.typescript = { "prettier" }
+      opts.formatters_by_ft.typescriptreact = { "prettier" }
     end
   end,
 }
