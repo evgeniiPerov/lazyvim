@@ -6,3 +6,20 @@
 --
 -- Or remove existing autocmds by their group name (which is prefixed with `lazyvim_` for the defaults)
 -- e.g. vim.api.nvim_del_augroup_by_name("lazyvim_wrap_spell")
+--
+
+vim.api.nvim_create_autocmd("FileType", {
+  pattern = "",
+  callback = function(args)
+    local bufname = vim.api.nvim_buf_get_name(args.buf)
+    if bufname:match("%.env$") or bufname:match("%.env%.[^/\\]+$") then
+      vim.b[args.buf].autoformat = false
+    end
+  end,
+})
+
+vim.api.nvim_create_autocmd("BufWritePre", {
+  callback = function(args)
+    vim.lsp.buf.format({ bufnr = args.buf })
+  end,
+})

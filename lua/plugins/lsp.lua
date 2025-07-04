@@ -12,6 +12,7 @@ return {
     "neovim/nvim-lspconfig",
     opts = {
       servers = {
+        eslint = false,
         biome = has_biome and {
           root_dir = root_dir,
           single_file_support = false,
@@ -64,6 +65,17 @@ return {
             },
           },
         },
+
+        graphql = {
+          filetypes = {
+            "graphql",
+            "typescriptreact",
+            "javascriptreact",
+            "typescript",
+            "javascript",
+          },
+          root_dir = util.root_pattern("graphql.config.*", ".git"),
+        },
       },
 
       setup = {
@@ -73,12 +85,14 @@ return {
         ts_ls = function()
           return true
         end,
+        eslint = function()
+          return false
+        end,
         vtsls = function(_, opts)
           LazyVim.lsp.on_attach(function(client, buffer)
             -- Optional: moveToFileRefactoring can be added here
           end, "vtsls")
 
-          -- Copy typescript settings to javascript
           opts.settings.javascript =
             vim.tbl_deep_extend("force", {}, opts.settings.typescript, opts.settings.javascript or {})
         end,
