@@ -1,10 +1,15 @@
 local util = require("lspconfig.util")
 
-local root_dir = util.root_pattern("turbo.json", "pnpm-workspace.yaml", ".git")
+local root_dir = util.root_pattern("turbo.json", "pnpm-workspace.yaml", ".git", "package.json")
 local has_biome = util.root_pattern("biome.json")(vim.fn.expand("%:p")) ~= nil
 
 local function get_tsdk()
-  return vim.fs.joinpath(root_dir(vim.fn.expand("%:p")), "node_modules", "typescript", "lib")
+  local dir = root_dir(vim.fn.expand("%:p"))
+  if not dir then
+    vim.notify("Could not find project root. Using CWD for TypeScript SDK.", vim.log.levels.WARN)
+    dir = vim.loop.cwd()
+  end
+  return vim.fs.joinpath(dir, "node_modules", "typescript", "lib")
 end
 
 return {
