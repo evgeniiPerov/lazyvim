@@ -1,5 +1,6 @@
 local util = require("lspconfig.util")
 
+-- Monorepo-friendly root
 local root_dir = util.root_pattern("turbo.json", "pnpm-workspace.yaml", "yarn.lock", "package.json", ".git")
 
 local function project_root()
@@ -16,10 +17,15 @@ local function get_tsdk()
   return vim.fs.joinpath(dir, "node_modules", "typescript", "lib")
 end
 
+-- Presence flags
 local HAS_BIOME = has_file_at_root("biome.json")
--- HAS_ESLINT computed but unused; keep if you’ll use later
--- local HAS_ESLINT = ...
+local HAS_ESLINT = has_file_at_root(".eslintrc.js")
+  or has_file_at_root(".eslintrc.cjs")
+  or has_file_at_root(".eslintrc.json")
+  or has_file_at_root("eslint.config.js")
+  or has_file_at_root("eslint.config.mjs")
 
+-- optional schemastore
 local ok_schemastore, schemastore = pcall(require, "schemastore")
 
 return {
@@ -34,7 +40,7 @@ return {
           if not client then
             return
           end
-          -- We format via Conform; prevent LSP formatting
+          -- Disable LSP formatting (use Conform instead)
           client.server_capabilities.documentFormattingProvider = false
           client.server_capabilities.documentRangeFormattingProvider = false
         end,
@@ -43,25 +49,6 @@ return {
 
     opts = {
       servers = {
-        -- ✅ JSON LSP without format-on-save
-        jsonls = {
-          root_dir = root_dir,
-          filetypes = { "json", "jsonc" },
-          settings = {
-            json = {
-              format = { enable = false }, -- keep formatter off
-              validate = { enable = true }, -- turn diagnostics on (set false if you want none)
-              schemas = ok_schemastore and schemastore.json.schemas() or {},
-            },
-          },
-          on_new_config = function(new_config)
-            -- ensure schemas table exists even if schemastore missing
-            new_config.settings = new_config.settings or {}
-            new_config.settings.json = new_config.settings.json or {}
-            new_config.settings.json.schemas = new_config.settings.json.schemas or {}
-          end,
-        },
-
         eslint = false,
 
         biome = HAS_BIOME and {
@@ -112,6 +99,21 @@ return {
         graphql = {
           filetypes = { "graphql", "typescriptreact", "javascriptreact", "typescript", "javascript" },
           root_dir = util.root_pattern("graphql.config.*", ".git"),
+        },
+
+        -- ✅ JSON LSP, no formatting
+        jsonls = {
+          root_dir = function(fname)
+            return root_dir(fname) or vim.loop.cwd()
+          end,
+          filetypes = { "json", "jsonc" },
+          settings = {
+            json = {
+              format = { enable = false }, -- disable LSP formatting
+              validate = { enable = true }, -- keep diagnostics
+              schemas = (ok_schemastore and schemastore.json.schemas()) or {},
+            },
+          },
         },
       },
 
