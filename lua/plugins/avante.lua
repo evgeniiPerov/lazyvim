@@ -1,32 +1,21 @@
+-- return {}
 return {
   "yetone/avante.nvim",
-  build = function()
-    if vim.fn.has("win32") == 1 then
-      return "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false"
-    else
-      return "make"
-    end
-  end,
+  build = "make",
   event = "VeryLazy",
   version = false,
   opts = {
-    provider = "ollama",
+    provider = "gemini",
     providers = {
-      ollama = {
-        endpoint = "http://127.0.0.1:11434",
-        model = "gemma3:latest",
-        timeout = 30000,
-        extra_request_body = {
-          temperature = 0.5,
-          max_tokens = 2048,
-        },
+      gemini = {
+        model = "gemini-2.5-pro-exp-03-25",
       },
     },
   },
   dependencies = {
     "nvim-lua/plenary.nvim",
     "MunifTanjim/nui.nvim",
-    "echasnovski/mini.pick",
+    "nvim-mini/mini.pick",
     "nvim-telescope/telescope.nvim",
     "hrsh7th/nvim-cmp",
     "ibhagwan/fzf-lua",
