@@ -28,10 +28,7 @@ return {
     opts.formatters_by_ft = opts.formatters_by_ft or {}
     opts.formatters = opts.formatters or {}
 
-    opts.format_on_save = {
-      lsp_fallback = false,
-      timeout_ms = 5000,
-    }
+    opts.format_on_save = false
 
     -- JS/TS/React formatting policy
     local js_ts_fmt
@@ -75,3 +72,4 @@ return {
     }
   end,
 }
+
