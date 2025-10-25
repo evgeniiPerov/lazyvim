@@ -1,0 +1,7 @@
+{
+  "clients": {
+    "next-devtools": {
+      "package": "next-devtools-mcp"
+    }
+  }
+}
