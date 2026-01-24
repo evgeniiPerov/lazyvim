@@ -28,7 +28,8 @@ return {
     opts.formatters_by_ft = opts.formatters_by_ft or {}
     opts.formatters = opts.formatters or {}
 
-    opts.format_on_save = false
+    -- Disable conform's built-in format_on_save (we use our own autocmd)
+    opts.format_on_save = nil
 
     -- JS/TS/React formatting policy
     local js_ts_fmt
@@ -53,7 +54,12 @@ return {
     -- Define formatters
     opts.formatters.biome = {
       command = "biome",
-      args = { "format", "-", "--stdin-file-path", "$FILENAME" },
+      args = {
+        "check",
+        "--write",
+        "--stdin-file-path",
+        "$FILENAME",
+      },
       stdin = true,
       require_cwd = false,
       -- prefer local biome if present
@@ -69,6 +75,13 @@ return {
       stdin = true,
       prefer_local = "node_modules/.bin",
       require_cwd = false,
+      cwd = require("conform.util").root_file({
+        ".prettierrc",
+        ".prettierrc.json",
+        ".prettierrc.js",
+        "prettier.config.js",
+        "package.json",
+      }),
     }
   end,
 }

@@ -18,9 +18,17 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+-- Remove LazyVim's default format autocmd to prevent double formatting
+pcall(vim.api.nvim_del_augroup_by_name, "lazyvim_format_notify")
+
 vim.api.nvim_create_autocmd("BufWritePre", {
   pattern = "*",
   callback = function(args)
-    require("conform").format({ bufnr = args.buf })
+    require("conform").format({
+      bufnr = args.buf,
+      timeout_ms = 1000,
+      async = false,
+      quiet = true,
+    })
   end,
 })

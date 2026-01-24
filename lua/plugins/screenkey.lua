@@ -3,11 +3,13 @@ return {
   lazy = false,
   version = "*", -- or branch = "main", to use the latest commit
   config = function()
-    require("screenkey").setup({
+    local screenkey = require("screenkey")
+    screenkey.setup({
       win_opts = {
         relative = "editor",
       },
     })
+    screenkey.toggle()
   end,
   keys = {
     {

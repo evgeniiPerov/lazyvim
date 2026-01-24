@@ -39,11 +39,14 @@ return {
       return
     end
 
+    -- Ensure Mason's eslint_d is in PATH
+    local mason_bin = vim.fn.stdpath("data") .. "/mason/bin"
+    vim.env.PATH = mason_bin .. ":" .. vim.env.PATH
+
     require("nvim-eslint").setup({
-      bin = "eslint",
-      prefer_local = "node_modules/.bin",
+      bin = "eslint_d", -- Fast ESLint daemon for monorepos
       code_actions = false, -- diagnostics only; formatting via conform
-      debounce = 100,
+      debounce = 750, -- Higher debounce for onType - only lint after 750ms of no typing
       diagnostics_format = "[eslint] ${message} [${ruleId}]",
       root = root,
 
@@ -56,7 +59,7 @@ return {
           cwd = root, -- important for shared presets
           resolvePluginsRelativeTo = root, -- resolve plugins/presets from repo root
         },
-        run = "onType",
+        run = "onType", -- Real-time linting with fast eslint_d
         format = false,
       },
 
