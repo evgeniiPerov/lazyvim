@@ -9,7 +9,7 @@ return {
         relative = "editor",
         anchor = "SE", -- NW=top-left, NE=top-right, SW=bottom-left, SE=bottom-right
         row = vim.o.lines - vim.o.cmdheight - 1,
-        col = 1, -- after comment this will be in right
+        --       col = 1, -- after comment this will be in right
       },
     })
     screenkey.toggle()

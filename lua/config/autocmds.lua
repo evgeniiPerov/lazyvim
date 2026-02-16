@@ -29,6 +29,7 @@ vim.api.nvim_create_autocmd("BufWritePre", {
       timeout_ms = 1000,
       async = false,
       quiet = true,
+      lsp_format = "fallback",
     })
   end,
 })

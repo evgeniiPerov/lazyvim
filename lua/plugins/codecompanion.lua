@@ -38,7 +38,7 @@ return {
                 url = "http://127.0.0.1:11434",
               },
               schema = {
-                model = { default = "qwen2.5-coder:32b" },
+                model = { default = "qwen2.5-coder:7b" },
                 num_ctx = { default = 16384 },
               },
             })

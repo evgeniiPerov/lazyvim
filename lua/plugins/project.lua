@@ -3,7 +3,7 @@ return {
   opts = {
     -- Manual mode doesn't automatically change your root directory, so you have
     -- the option to manually do so using `:ProjectRoot` command.
-    manual_mode = true,
+    manual_mode = false,
 
     -- Methods of detecting the root directory. **"lsp"** uses the native neovim
     -- lsp, while **"pattern"** uses vim-rooter like glob pattern matching. Here
@@ -48,6 +48,13 @@ return {
     end)
   end,
   keys = {
-    { "<leader>fp", "<Cmd>Telescope projects<CR>", desc = "Projects" },
+    {
+      "<leader>fp",
+      function()
+        require("telescope").extensions.projects.projects({})
+      end,
+      desc = "Projects",
+    },
+    -- Use :ProjectRoot to manually add current dir to project.nvim history
   },
 }

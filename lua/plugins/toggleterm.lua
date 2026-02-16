@@ -7,6 +7,9 @@ return {
         persist_mode = false,
         start_in_insert = true,
       })
+      -- Easy escape from terminal to normal mode
+      vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], { desc = "Exit terminal mode" })
+      vim.keymap.set("t", "<C-w>", [[<C-\><C-n><C-w>]], { desc = "Window commands from terminal" })
     end,
     keys = {
       {
