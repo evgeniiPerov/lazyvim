@@ -8,6 +8,8 @@ return {
       "nvim-treesitter/nvim-treesitter",
       -- Vitest adapter
       "marilari88/neotest-vitest",
+      -- Jest adapter
+      "nvim-neotest/neotest-jest",
     },
     opts = function()
       -- Auto-detect package manager from package.json
@@ -30,17 +32,42 @@ return {
       local vitest_command = package_manager == "npm" and "npx vitest"
         or (package_manager .. " vitest")
 
+      -- Find a config file by walking up from the test file
+      local function find_config_up(file, config_names)
+        local dir = vim.fn.fnamemodify(file, ":h")
+        while dir ~= "/" do
+          for _, name in ipairs(config_names) do
+            local config = dir .. "/" .. name
+            if vim.fn.filereadable(config) == 1 then
+              return config
+            end
+          end
+          dir = vim.fn.fnamemodify(dir, ":h")
+        end
+        return nil
+      end
+
+      local jest_command = package_manager == "npm" and "npx jest" or (package_manager .. " jest")
+
       return {
         adapters = {
           ["neotest-vitest"] = {
-            -- Filter for test files
             filter_dir = function(name)
               return name ~= "node_modules" and name ~= ".turbo"
             end,
-            -- Auto-detected package manager command
             vitestCommand = vitest_command,
-            -- Look for vitest config
-            vitestConfigFile = "vitest.config.mts",
+            vitestConfigFile = function(file)
+              return find_config_up(file, { "vitest.config.mts", "vitest.config.ts", "vitest.config.js" })
+            end,
+          },
+          ["neotest-jest"] = {
+            jestCommand = jest_command,
+            jestConfigFile = function(file)
+              return find_config_up(file, { "jest.config.ts", "jest.config.js", "jest.config.mjs" })
+            end,
+            cwd = function(file)
+              return vim.fn.fnamemodify(file, ":h"):match("(.-/[^/]+/)src") or vim.fn.getcwd()
+            end,
           },
         },
       -- Show test status in sign column
@@ -160,11 +187,10 @@ return {
       },
     },
     config = function(_, opts)
-      -- Setup adapters
       opts.adapters = {
         require("neotest-vitest")(opts.adapters["neotest-vitest"] or {}),
+        require("neotest-jest")(opts.adapters["neotest-jest"] or {}),
       }
-
       require("neotest").setup(opts)
     end,
   },
