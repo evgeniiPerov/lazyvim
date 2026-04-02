@@ -1,4 +1,26 @@
-return {}
+return {
+  {
+    "neovim/nvim-lspconfig",
+    opts = {
+      servers = {
+        vtsls = {
+          settings = {
+            typescript = {
+              preferences = {
+                importModuleSpecifier = "non-relative",
+              },
+            },
+            javascript = {
+              preferences = {
+                importModuleSpecifier = "non-relative",
+              },
+            },
+          },
+        },
+      },
+    },
+  },
+}
 -- local util = require("lspconfig.util")
 --
 -- -- Monorepo-friendly root

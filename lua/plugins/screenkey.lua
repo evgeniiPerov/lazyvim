@@ -16,7 +16,7 @@ return {
   end,
   keys = {
     {
-      "<leader>tk",
+      "<leader>uK",
       function()
         require("screenkey").toggle()
       end,

@@ -24,12 +24,16 @@ pcall(vim.api.nvim_del_augroup_by_name, "lazyvim_format_notify")
 vim.api.nvim_create_autocmd("BufWritePre", {
   pattern = "*",
   callback = function(args)
+    if vim.b[args.buf].autoformat == false then
+      return
+    end
     require("conform").format({
       bufnr = args.buf,
       timeout_ms = 1000,
       async = false,
       quiet = true,
-      lsp_format = "fallback",
+      lsp_format = "never",
     })
   end,
 })
+
