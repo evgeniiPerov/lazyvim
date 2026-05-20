@@ -8,6 +8,13 @@
 -- e.g. vim.api.nvim_del_augroup_by_name("lazyvim_wrap_spell")
 --
 
+vim.filetype.add({
+  pattern = {
+    ["%.env%.[%w_.-]+"] = "sh",
+    ["%.env"] = "sh",
+  },
+})
+
 vim.api.nvim_create_autocmd("FileType", {
   pattern = "",
   callback = function(args)

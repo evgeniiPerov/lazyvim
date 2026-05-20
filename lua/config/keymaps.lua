@@ -17,3 +17,7 @@ vim.keymap.set("n", "gl", function()
     vim.api.nvim_set_current_win(win_id)
   end
 end, { desc = "Diagnostic float (focused)" })
+
+-- Terminal mode escapes (general, not toggleterm-specific)
+vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], { desc = "Exit terminal mode" })
+vim.keymap.set("t", "<C-w>", [[<C-\><C-n><C-w>]], { desc = "Window commands from terminal" })

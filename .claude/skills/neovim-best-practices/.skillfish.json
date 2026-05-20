@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "name": "neovim-best-practices",
+  "owner": "kriscard",
+  "repo": "kriscard-claude-plugins",
+  "path": "plugins/neovim-advisor/skills/neovim-best-practices",
+  "branch": "main",
+  "sha": "ee432de83b5486c7036c2eb75d2e25205a573f15",
+  "source": "manual"
+}
