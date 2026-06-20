@@ -42,16 +42,15 @@ return {
   },
   event = "VeryLazy",
   config = function(_, opts)
+    -- project.nvim is kept for auto-chdir to project root (manual_mode = false).
+    -- Project PICKING is done by snacks (telescope was removed); see <leader>fp below.
     require("project_nvim").setup(opts)
-    require("lazyvim.util").on_load("telescope.nvim", function()
-      require("telescope").load_extension("projects")
-    end)
   end,
   keys = {
     {
       "<leader>fp",
       function()
-        require("telescope").extensions.projects.projects({})
+        Snacks.picker.projects()
       end,
       desc = "Projects",
     },

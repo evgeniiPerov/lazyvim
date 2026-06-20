@@ -47,5 +47,13 @@ return {
       end,
       desc = "Projects",
     },
+    {
+      "<leader>fF",
+      function()
+        -- search everything: include hidden (.env) and gitignored (node_modules)
+        Snacks.picker.files({ hidden = true, ignored = true })
+      end,
+      desc = "Find Files (hidden + ignored)",
+    },
   },
 }

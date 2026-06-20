@@ -29,8 +29,7 @@ return {
       end
 
       local package_manager = get_package_manager()
-      local vitest_command = package_manager == "npm" and "npx vitest"
-        or (package_manager .. " vitest")
+      local vitest_command = package_manager == "npm" and "npx vitest" or (package_manager .. " vitest")
 
       -- Find a config file by walking up from the test file
       local function find_config_up(file, config_names)
@@ -70,31 +69,31 @@ return {
             end,
           },
         },
-      -- Show test status in sign column
-      status = {
-        enabled = true,
-        virtual_text = true,
-        signs = true,
-      },
-      -- Floating window for test output
-      output = {
-        enabled = true,
-        open_on_run = true,
-      },
-      -- Show diagnostics for failed tests
-      diagnostic = {
-        enabled = true,
-        severity = vim.diagnostic.severity.ERROR,
-      },
-      -- Icons for test status
-      icons = {
-        running = "⟳",
-        passed = "✓",
-        failed = "✗",
-        skipped = "⊘",
-        unknown = "?",
-      },
-    }
+        -- Show test status in sign column
+        status = {
+          enabled = true,
+          virtual_text = true,
+          signs = true,
+        },
+        -- Floating window for test output
+        output = {
+          enabled = true,
+          open_on_run = true,
+        },
+        -- Show diagnostics for failed tests
+        diagnostic = {
+          enabled = true,
+          severity = vim.diagnostic.severity.ERROR,
+        },
+        -- Icons for test status
+        icons = {
+          running = "⟳",
+          passed = "✓",
+          failed = "✗",
+          skipped = "⊘",
+          unknown = "?",
+        },
+      }
     end,
     keys = {
       -- Run nearest test (like VSCode's "Run Test")
@@ -187,10 +186,20 @@ return {
       },
     },
     config = function(_, opts)
-      opts.adapters = {
-        require("neotest-vitest")(opts.adapters["neotest-vitest"] or {}),
-        require("neotest-jest")(opts.adapters["neotest-jest"] or {}),
-      }
+      -- Instantiate every name-keyed adapter generically so adapters registered by
+      -- LazyVim extras (e.g. neotest-python from lang.python) are preserved, not dropped.
+      local adapters = {}
+      for name, cfg in pairs(opts.adapters or {}) do
+        if type(name) == "string" then
+          local ok, mod = pcall(require, name)
+          if ok then
+            adapters[#adapters + 1] = type(cfg) == "table" and mod(cfg) or mod
+          end
+        else
+          adapters[#adapters + 1] = cfg
+        end
+      end
+      opts.adapters = adapters
       require("neotest").setup(opts)
     end,
   },

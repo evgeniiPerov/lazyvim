@@ -18,7 +18,7 @@ local root_dir = util.root_pattern(
 )
 
 local function project_root()
-  return root_dir(vim.fn.expand("%:p")) or vim.loop.cwd()
+  return root_dir(vim.fn.expand("%:p")) or vim.uv.cwd()
 end
 
 local function has(root, name)

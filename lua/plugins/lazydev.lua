@@ -8,9 +8,5 @@ return {
       -- Always load cord.nvim types when CordConfig is mentioned
       { path = "cord.nvim", words = { "Cord" } },
     },
-    -- Enable type checking for all files
-    enabled = function()
-      return true
-    end,
   },
 }

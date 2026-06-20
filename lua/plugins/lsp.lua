@@ -6,6 +6,11 @@ return {
         vtsls = {
           settings = {
             typescript = {
+              -- big generated files (e.g. src/codegen/graphql.tsx ~19k lines) starve tsserver.
+              -- VSCode bumps this too; default is ~3072MB.
+              tsserver = {
+                maxTsServerMemory = 8192,
+              },
               preferences = {
                 importModuleSpecifier = "non-relative",
               },

@@ -29,7 +29,7 @@ return {
       bottom_search = true,
       command_palette = true,
       long_message_to_split = true,
-      inc_rename = true,
+      -- inc_rename omitted: smjonas/inc-rename.nvim is not installed (was a no-op).
     },
   },
   -- stylua: ignore
@@ -39,7 +39,7 @@ return {
     { "<leader>snh", function() require("noice").cmd("history") end, desc = "Noice History" },
     { "<leader>sna", function() require("noice").cmd("all") end, desc = "Noice All" },
     { "<leader>snd", function() require("noice").cmd("dismiss") end, desc = "Dismiss All" },
-    { "<c-f>", function() if not require("noice.lsp").scroll(4) then return "<c-f>" end end, silent = true, expr = true, desc = "Scroll forward", mode = {"i", "n", "s"} },
-    { "<c-b>", function() if not require("noice.lsp").scroll(-4) then return "<c-b>" end end, silent = true, expr = true, desc = "Scroll backward", mode = {"i", "n", "s"}},
+    -- <c-f>/<c-b> intentionally NOT mapped here: neoscroll owns page scrolling.
+    -- (Previously these shadowed neoscroll's animated <C-f>/<C-b>.)
   },
 }

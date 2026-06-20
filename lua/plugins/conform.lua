@@ -10,7 +10,7 @@ return {
 
     local function find_root(bufname)
       return util.root_pattern("turbo.json", "pnpm-workspace.yaml", "yarn.lock", "package.json", ".git")(bufname)
-        or vim.loop.cwd()
+        or vim.uv.cwd()
     end
 
     local function detect_js_formatter(root)

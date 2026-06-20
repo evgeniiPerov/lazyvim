@@ -12,7 +12,7 @@ return {
         --       col = 1, -- after comment this will be in right
       },
     })
-    screenkey.toggle()
+    -- Do NOT auto-toggle on startup; enable on demand with <leader>uK.
   end,
   keys = {
     {

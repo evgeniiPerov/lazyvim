@@ -10,7 +10,6 @@ return {
         "typescript",
         "javascript",
         "tsx",
-        "jsx",
         "yaml",
         "bash",
         "html",
@@ -19,7 +18,6 @@ return {
         "toml",
         "ron",
       },
-      highlight = { enable = true },
     },
   },
 }

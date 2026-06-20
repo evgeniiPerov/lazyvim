@@ -34,7 +34,10 @@ return {
     config = function()
       require("mcphub").setup({
         cmd = "/usr/local/bin/mcp-hub", -- your detected path
-        auto_start = true,
+        -- auto_start had no effect: this plugin is lazy-loaded (cmd/keys), so setup()
+        -- only runs on first MCP keymap/command. It starts then, on demand.
+        -- For true boot auto-start, add `event = "VeryLazy"` above (spawns mcp-hub every launch).
+        auto_start = false,
         log_level = "info",
       })
 
