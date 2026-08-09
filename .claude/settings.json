@@ -1,0 +1,15 @@
+{
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "f=$(jq -r '.tool_input.file_path // empty'); [ -z \"$f\" ] && exit 0; case \"$f\" in *.lua) sty=$(command -v stylua || echo ~/.local/share/nvim/mason/bin/stylua); [ -x \"$sty\" ] && \"$sty\" \"$f\" ;; esac; case \"$f\" in */lua/config/keymaps.lua) cd ~/.config/nvim && nvim --headless \"+luafile scripts/dump-keymaps.lua\" +qa ;; esac"
+          }
+        ]
+      }
+    ]
+  }
+}

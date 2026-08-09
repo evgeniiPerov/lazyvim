@@ -2,6 +2,18 @@
 -- Default keymaps that are always set: https://github.com/LazyVim/LazyVim/blob/main/lua/lazyvim/config/keymaps.lua
 -- Add any additional keymaps here
 
+-- nvim-lspconfig dropped :LspRestart/:LspInfo (now native vim.lsp). Bring restart back:
+-- stops all clients, then :edit retriggers FileType so LazyVim re-attaches them.
+vim.api.nvim_create_user_command("LspRestart", function()
+  for _, c in ipairs(vim.lsp.get_clients()) do
+    vim.lsp.stop_client(c.id)
+  end
+  vim.defer_fn(function()
+    vim.cmd("edit")
+  end, 300)
+end, { desc = "Restart LSP clients (reload tsconfig etc.)" })
+vim.keymap.set("n", "<leader>cR", "<cmd>LspRestart<cr>", { desc = "Restart LSP" })
+
 -- Show diagnostic in a focused float (works even with Claude Code split open)
 vim.keymap.set("n", "gl", function()
   local float_opts = {

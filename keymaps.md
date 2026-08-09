@@ -61,6 +61,7 @@
 | `<leader>bp` | Toggle Pin |
 | `<leader>br` | Delete Buffers to the Right |
 | `<leader>cF` | Format Injected Langs |
+| `<leader>cR` | Restart LSP |
 | `<leader>cS` | LSP references/definitions/... (Trouble) |
 | `<leader>cd` | Line Diagnostics |
 | `<leader>cf` | Format |
@@ -228,11 +229,11 @@
 | `<leader>xx` | Diagnostics (Trouble) |
 | `<leader>\|` | Split Window Right |
 | `<C-/>` | Open a horizontal terminal at the current directory |
-| `<C-B>` | Scroll Backward |
+| `<C-B>` | Scroll full-page up |
 | `<C-Bslash>` | Open a floating terminal at the current directory |
 | `<C-D>` | Scroll half-page down |
 | `<C-Down>` | Decrease Window Height |
-| `<C-F>` | Scroll Forward |
+| `<C-F>` | Scroll full-page down |
 | `<C-H>` | Go to Left Window |
 | `<C-J>` | Go to Lower Window |
 | `<C-K>` | Go to Upper Window |
@@ -346,6 +347,7 @@
 | `<leader>tx` | Clear Coverage |
 | `<leader>uE` | Toggle Env Cloak |
 | `<leader>uK` | Toggle Screenkey |
+| `<leader>uM` | Toggle Markdown Render |
 | `<leader>uP` | Preview Cloaked Line |
 | `<leader>umR` | MCP: Restart |
 | `<leader>umS` | MCP: Stop |

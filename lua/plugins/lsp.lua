@@ -5,6 +5,11 @@ return {
       servers = {
         vtsls = {
           settings = {
+            -- use the project's own TypeScript (e.g. shelter ships TS 6.0.3) instead of
+            -- vtsls's bundled 5.9.x. Matches the version Next's ts-plugin expects.
+            vtsls = {
+              autoUseWorkspaceTsdk = true,
+            },
             typescript = {
               -- big generated files (e.g. src/codegen/graphql.tsx ~19k lines) starve tsserver.
               -- VSCode bumps this too; default is ~3072MB.
@@ -13,11 +18,17 @@ return {
               },
               preferences = {
                 importModuleSpecifier = "non-relative",
+                -- with tsconfig baseUrl set, every file under the root (incl. node_modules)
+                -- becomes a valid "non-relative" specifier, so auto-import offers
+                -- 'node_modules/@react-email/components/dist/index.cjs' instead of the
+                -- package name. Drop those candidates; the bare package name survives.
+                autoImportSpecifierExcludeRegexes = { "(^|/)node_modules/" },
               },
             },
             javascript = {
               preferences = {
                 importModuleSpecifier = "non-relative",
+                autoImportSpecifierExcludeRegexes = { "(^|/)node_modules/" },
               },
             },
           },
