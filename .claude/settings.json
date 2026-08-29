@@ -1,12 +1,23 @@
 {
   "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Edit|Write|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "f=$(jq -r '.tool_input.file_path // empty'); case \"$f\" in */lua/plugins/theme.lua) echo 'theme.lua is a symlink into ~/.local/state/omarchy/current/theme/ - edit the omarchy theme source instead; changes here are clobbered on theme switch' >&2; exit 2 ;; */lazy-lock.json) echo 'lazy-lock.json is owned by :Lazy update/restore - do not hand-edit' >&2; exit 2 ;; esac; exit 0"
+          }
+        ]
+      }
+    ],
     "PostToolUse": [
       {
         "matcher": "Edit|Write|MultiEdit",
         "hooks": [
           {
             "type": "command",
-            "command": "f=$(jq -r '.tool_input.file_path // empty'); [ -z \"$f\" ] && exit 0; case \"$f\" in *.lua) sty=$(command -v stylua || echo ~/.local/share/nvim/mason/bin/stylua); [ -x \"$sty\" ] && \"$sty\" \"$f\" ;; esac; case \"$f\" in */lua/config/keymaps.lua) cd ~/.config/nvim && nvim --headless \"+luafile scripts/dump-keymaps.lua\" +qa ;; esac"
+            "command": "f=$(jq -r '.tool_input.file_path // empty'); [ -z \"$f\" ] && exit 0; case \"$f\" in *.lua) luajit -b \"$f\" /dev/null || exit 2; sty=$(command -v stylua || echo ~/.local/share/nvim/mason/bin/stylua); [ -x \"$sty\" ] && \"$sty\" \"$f\" ;; esac; case \"$f\" in */lua/config/keymaps.lua) cd ~/.config/nvim && nvim --headless \"+luafile scripts/dump-keymaps.lua\" +qa ;; esac; exit 0"
           }
         ]
       }

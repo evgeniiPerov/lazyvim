@@ -2,6 +2,9 @@ return {
   "folke/snacks.nvim",
   ---@type snacks.Config
   opts = {
+    -- Kitty-protocol image viewer (ghostty-aware). Replaces 3rd/image.nvim:
+    -- no luarocks magick dep, renders markdown images + math inline.
+    image = { enabled = true },
     picker = {
       sources = {
         projects = {

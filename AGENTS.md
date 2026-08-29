@@ -16,7 +16,7 @@ Built on **LazyVim**. Official docs: https://lazyvim.github.io/. nvim **0.12.x**
   - `options.lua` — `vim.opt`/`vim.o` (incl. `vim.g.autoformat = false`).
   - `keymaps.lua` — custom keybindings (all `vim.keymap.set` with `desc`).
   - `autocmds.lua` — formatting-on-save (conform), `.env` filetype handling, **big-file LSP degrade**.
-- `lua/plugins/` — one spec per file (34 specs).
+- `lua/plugins/` — one spec per file (35 specs).
 - `lazy-lock.json` — version lockfile.
 - `lazyvim.json` — LazyVim extras: `ai.claudecode`, `dap.core`, `editor.neo-tree`, `editor.harpoon2`, `lang.json`, `lang.python`.
 
@@ -35,6 +35,7 @@ To add a plugin: new file in `lua/plugins/` returning a spec table. Disable a pl
 | Rust | **rustaceanvim** | No LazyVim rust extra. Configured via `vim.g.rustaceanvim` (NOT `setup()`). |
 | Theme | **omarchy** hand-rolled highlights | `lua/plugins/theme.lua` is a symlink into `~/.config/omarchy/...` (path in AGENTS.local.md). Hot-reload via `omarchy-theme-hotreload.lua` on `User LazyReload`. 11 extra colorschemes in `all-themes.lua` (lazy, available for switching). |
 | Scrolling | **neoscroll** (animation) + snacks scroll disabled + nvim-scrollview (scrollbar) | Three scroll-related specs are complementary, NOT conflicting. |
+| Markdown | **render-markdown.nvim** (in-buffer) + **snacks.image** (inline images/math) | `ft = markdown`, toggle `<leader>uM`. Images via Kitty graphics protocol (ghostty). `3rd/image.nvim` removed 2026-08-29: its `integrations = {}` override killed the markdown integration outright, and it needed a luarocks `magick` build. snacks.image needs only the `magick` CLI. Detection is an escape-sequence query, not `$TERM` — force with `SNACKS_GHOSTTY=1` if images stay blank. |
 | Big files | LSP semantic-tokens + inlay-hints disabled on buffers ≥5000 lines | `autocmds.lua`. vtsls `maxTsServerMemory = 8192`. Treesitter/LSP stay attached. See [[project_bigfile_lsp_lag]] memory. |
 
 ## Code style
